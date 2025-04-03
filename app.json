@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "KorensiApp",
-    "slug": "KorensiApp",
+    "name": "devotional-app",
+    "slug": "devotional-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
