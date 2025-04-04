@@ -1,17 +1,54 @@
-import React from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { router } from "expo-router";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../utils/firebaseConfig";
 
 export default function login() {
   const navigation = useNavigation();
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  //handle login
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert("Error", "Please fill in both fields.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      Alert.alert("Success", "Logged in successfully!");
+      router.push("/(tabs)/home");
+    } catch (error: any) {
+      console.error("Login Error:", error.message);
+      Alert.alert("Error:", error.message);
+    }
+
+    setLoading(false);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.purpleSection}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
           <AntDesign name="arrowleft" size={24} color="black" />
         </TouchableOpacity>
         <Text style={styles.title}>Login to your account</Text>
@@ -19,11 +56,23 @@ export default function login() {
 
       <View style={styles.whiteSection}>
         <Text style={styles.label}>Your Email</Text>
-        <TextInput style={styles.input} placeholder="Enter your email" keyboardType="email-address" placeholderTextColor="gray" />
-        
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your email"
+          keyboardType="email-address"
+          placeholderTextColor="gray"
+          value={email}
+          onChangeText={setEmail}
+        />
+
         <Text style={styles.label}>Password</Text>
-        <TextInput style={styles.input} placeholder="Enter your password" secureTextEntry placeholderTextColor="gray" />
-        
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your password"
+          secureTextEntry
+          placeholderTextColor="gray"
+        />
+
         <TouchableOpacity>
           <Text style={styles.forgotPassword}>Forgot Password?</Text>
         </TouchableOpacity>
@@ -33,10 +82,16 @@ export default function login() {
         </TouchableOpacity>
 
         <View style={styles.loginCont}>
-          <Text style={styles.normalText}>Dont have an account?
-          <Text style={styles.login} onPress={()=> router.push('/(auth)/signup')}> {''} Signup</Text>
+          <Text style={styles.normalText}>
+            Dont have an account?
+            <Text
+              style={styles.login}
+              onPress={() => router.push("/(auth)/signup")}
+            >
+              {" "}
+              {""} Signup
+            </Text>
           </Text>
-          
         </View>
 
         <Text style={styles.orText}>Or login up with</Text>
@@ -125,23 +180,22 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   loginCont: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 20,
   },
   normalText: {
     fontSize: 16,
-    color: '#333',
-    fontFamily: 'poppins',
+    color: "#333",
+    fontFamily: "poppins",
     gap: 10,
   },
   login: {
     fontSize: 16,
     color: "blue",
     marginBottom: 20,
-    marginLeft: 8
-
+    marginLeft: 8,
   },
   socialButtonsContainer: {
     flexDirection: "row",

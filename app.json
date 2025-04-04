@@ -36,6 +36,15 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "firebaseApiKey": "AIzaSyDEm5uiy3z4ka8zUrMttO1lG5uQCIzAr7o",
+      "firebaseAuthDomain": "dailyarmourapp.firebaseapp.com",
+      "firebaseProjectId": "dailyarmourapp",
+      "firebaseStorageBucket": "dailyarmourapp.firebasestorage.app",
+      "firebaseMessagingSenderId": "510011451378",
+      "firebaseAppId": "1:510011451378:web:bc435372470b132a0d6d6b",
+      "firebaseMeasurementId": "G-XMHWRZWGWF"
     }
   }
 }

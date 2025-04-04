@@ -1,12 +1,40 @@
-import React from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { router } from "expo-router";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../utils/firebaseConfig"; 
 
 export default function signup() {
   const navigation = useNavigation();
+  
+  // State for email and password
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // Handle sign-up
+  const handleSignUp = async () => {
+    if (!email || !password) {
+      Alert.alert("Error", "Please fill in both fields.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      Alert.alert("Success", "Account created successfully");
+      router.push('/(auth)/login');
+    } catch (error: any) {
+      console.error("Error creating account:", error.message);
+      Alert.alert("Error", error.message);
+    }
+
+    setLoading(false);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -19,21 +47,38 @@ export default function signup() {
 
       <View style={styles.whiteSection}>
         <Text style={styles.label}>Your Email</Text>
-        <TextInput style={styles.input} placeholder="Enter your email" keyboardType="email-address" placeholderTextColor="gray" />
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your email"
+          keyboardType="email-address"
+          placeholderTextColor="gray"
+          value={email}
+          onChangeText={setEmail}
+        />
         
         <Text style={styles.label}>Password</Text>
-        <TextInput style={styles.input} placeholder="Enter your password" secureTextEntry placeholderTextColor="gray" />
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your password"
+          secureTextEntry
+          placeholderTextColor="gray"
+          value={password}
+          onChangeText={setPassword} // Update password state
+        />
 
-
-        <TouchableOpacity style={styles.signupButton}>
-          <Text style={styles.signupButtonText}>Sign Up</Text>
+        <TouchableOpacity
+          style={styles.signupButton}
+          onPress={handleSignUp}
+          disabled={loading} // Disable button while loading
+        >
+          <Text style={styles.signupButtonText}>
+            {loading ? "Signing Up..." : "Sign Up"}
+          </Text>
         </TouchableOpacity>
 
         <View style={styles.loginCont}>
-          <Text style={styles.normalText}>already have an account?
-          <Text style={styles.login} onPress={()=> router.push('/(auth)/login')}> {''} Login</Text>
-          </Text>
-          
+          <Text style={styles.normalText}>Already have an account?</Text>
+          <Text style={styles.login} onPress={() => router.push("/(auth)/login")}> Login</Text>
         </View>
 
         <Text style={styles.orText}>Or sign up with</Text>
@@ -126,14 +171,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
     fontFamily: 'poppins',
-    gap: 10,
   },
   login: {
     fontSize: 16,
     color: "blue",
-    marginBottom: 20,
-    marginLeft: 8
-
+    marginLeft: 8,
   },
   socialButtonsContainer: {
     flexDirection: "row",
