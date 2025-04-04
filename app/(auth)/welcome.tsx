@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     flexWrap: "nowrap",
     color: "#fff",
     letterSpacing: 1
+    
   },
   appName: {
     fontSize: 28,
