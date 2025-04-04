@@ -71,14 +71,17 @@ export default function login() {
           placeholder="Enter your password"
           secureTextEntry
           placeholderTextColor="gray"
+          value={password}
+          onChangeText={setPassword}
         />
 
         <TouchableOpacity>
           <Text style={styles.forgotPassword}>Forgot Password?</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.loginButton}>
-          <Text style={styles.loginButtonText}>Login</Text>
+        <TouchableOpacity style={styles.loginButton} 
+         onPress={handleLogin} disabled={loading}>
+          <Text style={styles.loginButtonText}> {loading ? "Logging in..." : "Login"}</Text>
         </TouchableOpacity>
 
         <View style={styles.loginCont}>
