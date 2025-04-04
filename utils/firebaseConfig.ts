@@ -1,16 +1,16 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import * as dotenv from "dotenv";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDEm5uiy3z4ka8zUrMttO1lG5uQCIzAr7o",
-  authDomain: "dailyarmourapp.firebaseapp.com",
-  projectId: "dailyarmourapp",
-  storageBucket: "dailyarmourapp.firebasestorage.app",
-  messagingSenderId: "510011451378",
-  appId: "1:510011451378:web:bc435372470b132a0d6d6b",
-  measurementId: "G-XMHWRZWGWF"
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
-
 
 
 // Initialize Firebase
