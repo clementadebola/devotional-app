@@ -1,74 +1,103 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import {
+  Image,
+  StyleSheet,
+  Platform,
+  Text,
+  View,
+  TouchableOpacity,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
 
 export default function HomeScreen() {
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.topContent}>
+        <View style={styles.topTextWrap}>
+          <Text style={{ color: "white" }}>
+            Sing unto the lord with thanksgiving; sing upon the harp unto our
+            God:
+          </Text>
+          <Text>Psalm 147: 7 </Text>
+        </View>
+      </View>
+
+      <View style={styles.mainContent}>
+        <View style={styles.card}>
+          <View>
+            <Text style={styles.cardHeadText}>Monring Devotional</Text>
+            <Text style={styles.cardPtext}>
+              Start your day with this passage
+            </Text>
+          </View>
+
+          <TouchableOpacity style={styles.button}>
+            <Text onPress={() => router.push("/(tabs)/devotional")} style={styles.buttonText}>Start Now!</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
+    backgroundColor: "#cc5200",
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  topContent: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
+    position: "relative",
+    padding: 20,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  topTextWrap: {
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  mainContent: {
+    flex: 2,
+    backgroundColor: "#fff3e6",
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    padding: 35,
+    alignItems: "center",
+  },
+  card: {
+    backgroundColor: "#2f2f2f",
+    padding: 20,
+    borderRadius: 20,
+    width: 350,
+    height: 150,
+    flexDirection: "column",
+    gap: 10,
+  },
+  cardHeadText: {
+    color: "#fff",
+    fontSize: 23,
+    fontWeight: "bold",
+  },
+  cardPtext: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "thin",
+    letterSpacing: 1.5,
+  },
+  button: {
+    backgroundColor: "#ff6600",
+    paddingVertical: 14,
+    paddingHorizontal: 30,
+    borderRadius: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    elevation: 5,
+    shadowColor: "#000",
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
   },
 });

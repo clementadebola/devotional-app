@@ -18,12 +18,24 @@ export default function TabLayout() {
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
+        tabBarInactiveTintColor: '#aaa',
         tabBarStyle: Platform.select({
           ios: {
-            // Use a transparent background on iOS to show the blur effect
             position: 'absolute',
           },
-          default: {},
+          default: {
+            backgroundColor: 'rgba(13, 27, 42, 0.9)',
+            position: 'absolute',
+            left: 30,
+            right: 30,
+            borderTopLeftRadius: 30,
+            borderTopRightRadius: 20,
+            height: 70,
+            paddingBottom: 10,
+            paddingTop: 10,
+            borderTopWidth: 0,
+            elevation: 20,
+          },
         }),
       }}>
       <Tabs.Screen
@@ -34,12 +46,21 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="devotional"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Devotional',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="book.pages.fill" color={color} />,
         }}
       />
+
+   <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
+        }}
+      />
+
     </Tabs>
   );
 }
