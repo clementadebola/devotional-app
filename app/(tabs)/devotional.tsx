@@ -28,6 +28,7 @@ export default function devotionalScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.topContent}>
+          
           <TouchableOpacity
             style={styles.backButton}
             onPress={() => navigation.goBack()}
