@@ -24,6 +24,7 @@ export default function devotionalScreen() {
     
     <SafeAreaView style={styles.container} edges={['top']}>
       <StatusBar barStyle="light-content" />
+      
       <CustomScrollView
         contentContainerStyle={{ paddingHorizontal: 0}}
        
