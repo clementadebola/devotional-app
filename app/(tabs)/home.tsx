@@ -8,11 +8,13 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
+import CustomScrollView from "@/components/CustomScrollView";
 
 export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <CustomScrollView>
       <View style={styles.topContent}>
         <View style={styles.topTextWrap}>
           <Text style={{ color: "white" }}>
@@ -37,6 +39,11 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
       </View>
+
+      <View>
+        
+      </View>
+      </CustomScrollView>
     </SafeAreaView>
   );
 }

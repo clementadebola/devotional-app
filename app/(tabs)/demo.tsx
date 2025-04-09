@@ -5,6 +5,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  ScrollView,
   Dimensions,
   StatusBar
 } from "react-native";
@@ -12,21 +13,21 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
-import CustomScrollView from "@/components/CustomScrollView";
+import ParallaxScrollView from '@/components/ParallaxScrollView';
 
 const {height, width} = Dimensions.get('window');
 const TAB_BAR_HEIGHT = 70; // Adjust this based on your tab bar height
 
-export default function devotionalScreen() {
+export default function demoScreen() {
   const navigation = useNavigation();
 
   return (
     
     <SafeAreaView style={styles.container} edges={['top']}>
       <StatusBar barStyle="light-content" />
-      <CustomScrollView
-        contentContainerStyle={{ paddingHorizontal: 0}}
-       
+      <ScrollView 
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
       >
         <View style={styles.topContent}>
           
@@ -84,7 +85,7 @@ export default function devotionalScreen() {
           {/* This is an empty view that ensures the content extends beyond the tab bar */}
           <View style={styles.bottomPadding} />
         </View>
-      </CustomScrollView>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -93,6 +94,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#cc5200",
+  },
+  scrollContent: {
+    minHeight: height + TAB_BAR_HEIGHT,
   },
   topContent: {
     alignItems: "center",
@@ -129,7 +133,7 @@ const styles = StyleSheet.create({
   },
   biblePassage: {
     color: '#fff',
-    fontSize: 20,
+    fontSize: 23,
     fontWeight: 'semibold',
     marginBottom: 20,
   },
