@@ -1,6 +1,11 @@
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function BibleVerse({ verse, passage }) {
+interface BibleVerseProps {
+  verse: string;
+  passage: string;
+}
+
+export default function BibleVerse({ verse, passage }: BibleVerseProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.verse}>{verse}</Text>
@@ -12,7 +17,7 @@ export default function BibleVerse({ verse, passage }) {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    marginBottom: 20,
+    // marginBottom: 20,
   },
   verse: {
     color: '#fff',

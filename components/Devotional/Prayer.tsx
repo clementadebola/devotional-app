@@ -1,6 +1,11 @@
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function Prayer({ title, text }) {
+interface PrayerProps {
+  title: string;
+  text: string;
+}
+
+export default function Prayer({ title, text }: PrayerProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>

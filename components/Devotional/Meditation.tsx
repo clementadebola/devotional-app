@@ -1,6 +1,11 @@
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function Meditation({ title, text }) {
+interface MeditationProps {
+  title: string;
+  text: string;
+}
+
+export default function Meditation({ title, text }: MeditationProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
