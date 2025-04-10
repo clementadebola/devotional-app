@@ -13,12 +13,17 @@ import { router } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import CustomScrollView from "@/components/CustomScrollView";
+import Meditation from "@/components/Devotional/Meditation";
+import BibleVerse from "@/components/Devotional/BibleVerse";
+import Prayer from "@/components/Devotional/Prayer";
+import { getTodaysDevotional } from "@/utils/dailyDevotional";
 
 const { height, width } = Dimensions.get("window");
 const TAB_BAR_HEIGHT = 70; // Adjust this based on your tab bar height
 
 export default function devotionalScreen() {
   const navigation = useNavigation();
+  const todaysDevotional = getTodaysDevotional();
 
   return (
     <CustomScrollView contentContainerStyle={{ paddingHorizontal: 0 }}>
@@ -34,50 +39,28 @@ export default function devotionalScreen() {
           </TouchableOpacity>
           <View style={styles.topTextWrap}>
             <Text style={styles.topText}>Verse of the day</Text>
-            <Text style={styles.bibleVerse}>Psalm 147: 7 </Text>
-            <Text style={styles.biblePassage}>
+            <BibleVerse
+              verse={todaysDevotional.verse}
+              passage={todaysDevotional.passage}
+            />
+            {/* <Text style={styles.biblePassage}>
               {" "}
               Sing unto the lord with thanksgiving; sing upon the harp unto our
               God:
-            </Text>
+            </Text> */}
           </View>
         </View>
 
         <View style={styles.bottomContainer}>
           <View style={styles.mainContent}>
-            <Text style={styles.topicText}>Topic: Feed them to the Air</Text>
-            <Text style={styles.biblePassage}>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Enim ab
-              molestiae numquam dicta autem quis quo error corporis. Eius
-              ducimus aut et animi quidem ea voluptatem aspernatur distinctio
-              similique quas. Lorem ipsum dolor sit amet consectetur adipisicing
-              elit. Laboriosam, porro et. Facilis quae, porro id corrupti odit
-              sed molestias, minima nostrum ad facere dolor perspiciatis nobis
-              blanditiis quidem ab inventore! Lorem ipsum dolor sit amet
-              consectetur, adipisicing elit. Beatae, ipsum expedita. Fugiat
-              doloremque atque dolore provident, impedit eos, vero inventore
-              nihil, porro perspiciatis deserunt quam accusantium laboriosam
-              facere ut voluptatum.
+            <Text style={styles.topicText}>
+              Topic: {todaysDevotional.topic}
             </Text>
+            <Text style={styles.biblePassage}>{todaysDevotional.content}</Text>
 
-            <View style={styles.meditationSection}>
-              <Text style={styles.meditationTitle}>Meditation</Text>
-              <Text style={styles.meditationText}>
-                Take a moment to reflect on today's verse. How does it speak to
-                your current situation? The Lord invites us to sing with
-                thanksgiving even in challenging times.
-              </Text>
-            </View>
+            <Meditation title="Meditation" text={todaysDevotional.meditation} />
 
-            <View style={styles.prayerSection}>
-              <Text style={styles.prayerTitle}>Prayer</Text>
-              <Text style={styles.prayerText}>
-                Dear Lord, help me to always approach You with thanksgiving.
-                Even when life feels challenging, remind me to praise You for
-                Your goodness and faithfulness. Let my heart sing to You
-                throughout this day. Amen.
-              </Text>
-            </View>
+            <Prayer title="Prayer" text={todaysDevotional.prayer} />
 
             <TouchableOpacity style={styles.shareButton}>
               <FontAwesome name="share-alt" size={20} color="#fff" />
