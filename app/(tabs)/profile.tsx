@@ -11,125 +11,146 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import ProfilePic from "../../assets/images/Perss.jpg";
 import CustomScrollView from "@/components/CustomScrollView";
 import { Ionicons } from "@expo/vector-icons";
-import { IconSymbol } from "@/components/ui/IconSymbol";
 import { useState } from "react";
 
-export default function profileScreen() {
-  const [name, setName] = useState("clement");
+export default function ProfileScreen() {
+  const [name, setName] = useState("Clement");
   const [isEditingName, setIsEditingName] = useState(false);
   const [dailyReadingPlan, setDailyReadingPlan] = useState(true);
   const [anxietyHelpPlan, setAnxietyHelpPlan] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
-  const primaryColor = darkMode? "#333333" : "#cc5200";
-  const textColor = darkMode ? "#ffffff" : "#333333";
+  // Enhanced color scheme
+  const theme = {
+    primary: darkMode ? "#ff8c42" : "#cc5200",
+    background: darkMode ? "#1e1e1e" : "#f5f5f5",
+    cardBackground: darkMode ? "#2d2d2d" : "#ffffff",
+    text: darkMode ? "#ffffff" : "#333333",
+    secondaryText: darkMode ? "#b3b3b3" : "#666666",
+    border: darkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
+    danger: "#ff4444",
+  };
 
   return (
     <CustomScrollView>
       <SafeAreaView
         style={[
           styles.container,
-          { backgroundColor: darkMode ? "#cc5200" : "#f5f5f5" },
+          { backgroundColor: theme.background },
         ]}
       >
         <View style={styles.header}>
           <Image style={styles.profileImg} source={ProfilePic} />
 
-          {isEditingName ? (
-            <TextInput
-              style={[styles.nameInput, { color: textColor }]}
-              value={name}
-              onChangeText={setName}
-              autoFocus
-              onSubmitEditing={() => setIsEditingName(false)}
-            />
-          ) : (
-            <Text style={[styles.nameText, { color: textColor }]}>
-              Welcome {name}
-            </Text>
-          )}
+          <View style={styles.nameContainer}>
+            {isEditingName ? (
+              <TextInput
+                style={[styles.nameInput, { color: theme.text, borderBottomColor: theme.border }]}
+                value={name}
+                onChangeText={setName}
+                autoFocus
+                onSubmitEditing={() => setIsEditingName(false)}
+              />
+            ) : (
+              <Text style={[styles.nameText, { color: theme.text }]}>
+                Welcome {name}
+              </Text>
+            )}
 
-          <TouchableOpacity onPress={() => setIsEditingName(!isEditingName)}>
-            <Ionicons name="pencil" size={24} color={primaryColor} />
-          </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.editButton}
+              onPress={() => setIsEditingName(!isEditingName)}>
+              <Ionicons name="pencil" size={20} color={theme.primary} />
+            </TouchableOpacity>
+          </View>
         </View>
 
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: primaryColor }]}>
+        <View style={[styles.section, { backgroundColor: theme.cardBackground, borderColor: theme.border }]}>
+          <Text style={[styles.sectionTitle, { color: theme.primary }]}>
             Devotional Plans
           </Text>
 
-          <View style={styles.optionItem}>
-            <Ionicons name="book" size={24} color={textColor} />
-            <Text style={[styles.optionText, { color: textColor }]}>
+          <View style={[styles.optionItem, { borderBottomColor: theme.border }]}>
+            <Ionicons name="book" size={24} color={theme.primary} />
+            <Text style={[styles.optionText, { color: theme.text }]}>
               Daily Bible Plan
             </Text>
 
             <Switch
               value={dailyReadingPlan}
               onValueChange={setDailyReadingPlan}
-              thumbColor={primaryColor}
-              trackColor={{ false: "#767577", true: `${primaryColor}80` }}
+              thumbColor={dailyReadingPlan ? theme.primary : "#f4f3f4"}
+              trackColor={{ false: "#767577", true: `${theme.primary}80` }}
+              ios_backgroundColor="#3e3e3e"
             />
           </View>
 
-          <View style={styles.optionItem}>
-            <Ionicons name="heart" size={24} color={textColor} />
-            <Text style={[styles.optionText, { color: textColor }]}>
+          <View style={[styles.optionItem, { borderBottomColor: theme.border }]}>
+            <Ionicons name="heart" size={24} color={theme.primary} />
+            <Text style={[styles.optionText, { color: theme.text }]}>
               Anxiety Help Plan
             </Text>
 
             <Switch
               value={anxietyHelpPlan}
               onValueChange={setAnxietyHelpPlan}
-              thumbColor={primaryColor}
-              trackColor={{ false: "#767577", true: `${primaryColor}80` }}
+              thumbColor={anxietyHelpPlan ? theme.primary : "#f4f3f4"}
+              trackColor={{ false: "#767577", true: `${theme.primary}80` }}
+              ios_backgroundColor="#3e3e3e"
             />
           </View>
         </View>
 
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: primaryColor }]}>
+        <View style={[styles.section, { backgroundColor: theme.cardBackground, borderColor: theme.border }]}>
+          <Text style={[styles.sectionTitle, { color: theme.primary }]}>
             Settings
           </Text>
 
-          <View style={styles.optionItem}>
-            <Ionicons name="moon" size={24} color={textColor} />
-            <Text style={[styles.optionText, { color: textColor }]}>
+          <View style={[styles.optionItem, { borderBottomColor: theme.border }]}>
+            <Ionicons name={darkMode ? "sunny" : "moon"} size={24} color={theme.primary} />
+            <Text style={[styles.optionText, { color: theme.text }]}>
               Dark Mode
             </Text>
 
             <Switch
               value={darkMode}
               onValueChange={setDarkMode}
-              thumbColor={primaryColor}
-              trackColor={{ false: "#767577", true: `${primaryColor}80` }}
+              thumbColor={darkMode ? theme.primary : "#f4f3f4"}
+              trackColor={{ false: "#767577", true: `${theme.primary}80` }}
+              ios_backgroundColor="#3e3e3e"
             />
           </View>
 
           <TouchableOpacity style={styles.optionItem}>
-            <Ionicons name="log-out" size={24} color="#ff4444" />
-            <Text style={[styles.optionText, { color: "#ff4444" }]}>
+            <Ionicons name="log-out" size={24} color={theme.danger} />
+            <Text style={[styles.optionText, { color: theme.danger }]}>
               Sign Out
             </Text>
           </TouchableOpacity>
         </View>
 
-        {/* stats Section*/}
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, {color: primaryColor}]}>Your Progress</Text>
+        {/* Stats Section */}
+        <View style={[styles.section, { backgroundColor: theme.cardBackground, borderColor: theme.border }]}>
+          <Text style={[styles.sectionTitle, { color: theme.primary }]}>
+            Your Progress
+          </Text>
 
           <View style={styles.statsContainer}>
+            <View style={[styles.statItem, { backgroundColor: `${theme.primary}15` }]}>
+              <Text style={[styles.statNumber, { color: theme.primary }]}>24</Text>
+              <Text style={[styles.statLabel, { color: theme.secondaryText }]}>Day Streak</Text>
+              <View style={styles.iconContainer}>
+                <Ionicons name="flame" size={18} color={theme.primary} />
+              </View>
+            </View>
 
-          <View style={styles.statItem}>
-            <Text style={[styles.statNumber, {color: primaryColor}]}>24</Text>
-            <Text style={[styles.statLabel, {color: textColor } ]}>Day Streak</Text>
-          </View>
-
-          <View style={styles.statItem}>
-            <Text style={[styles.statNumber, {color: primaryColor}]}> 87</Text>
-            <Text style={[styles.statLabel, {color: textColor}]}>Devotionals</Text>
-          </View>
+            <View style={[styles.statItem, { backgroundColor: `${theme.primary}15` }]}>
+              <Text style={[styles.statNumber, { color: theme.primary }]}>87</Text>
+              <Text style={[styles.statLabel, { color: theme.secondaryText }]}>Devotionals</Text>
+              <View style={styles.iconContainer}>
+                <Ionicons name="book" size={18} color={theme.primary} />
+              </View>
+            </View>
           </View>
         </View>
       </SafeAreaView>
@@ -140,28 +161,29 @@ export default function profileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#cc5200",
-    padding: 10,
+    padding: 16,
   },
   header: {
     flexDirection: "row",
-    justifyContent: "flex-start",
     alignItems: "center",
-    marginTop: 10,
-    padding: 10,
+    marginBottom: 20,
     gap: 15,
   },
   profileImg: {
-    width: 50,
-    height: 50,
-    borderRadius: 50,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+  },
+  nameContainer: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
   },
   nameInput: {
     fontSize: 22,
     fontWeight: "600",
     flex: 1,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
     paddingVertical: 5,
   },
   nameText: {
@@ -169,45 +191,59 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     flex: 1,
   },
+  editButton: {
+    padding: 8,
+  },
   section: {
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
-    borderRadius: 12,
-    padding: 16,
+    borderRadius: 16,
+    padding: 20,
     marginBottom: 20,
+    borderWidth: 1,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
     marginBottom: 15,
   },
   optionItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 12,
+    paddingVertical: 14,
     borderBottomWidth: 1,
-    borderBottomColor: "rgba(0, 0, 0, 0.1)",
   },
   optionText: {
     flex: 1,
     fontSize: 16,
     marginLeft: 15,
   },
-  statsContainer:{
+  statsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 10
+    justifyContent: 'space-between',
+    marginTop: 10,
   },
-  statItem:{
-    alignItems:'center',
-    padding: 10
+  statItem: {
+    alignItems: 'center',
+    padding: 16,
+    borderRadius: 12,
+    width: '48%',
+    position: 'relative',
   },
   statNumber: {
-    fontSize: 28,
-    fontWeight: 'bold'
+    fontSize: 32,
+    fontWeight: 'bold',
   },
-  statLabel:{
+  statLabel: {
     fontSize: 14,
-    marginTop: 5
+    marginTop: 5,
   },
-
+  iconContainer: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
 });
