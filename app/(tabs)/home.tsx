@@ -9,40 +9,45 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import CustomScrollView from "@/components/CustomScrollView";
+import BibleVerse from "@/components/Devotional/BibleVerse";
+import { getTodaysDevotional } from "@/utils/dailyDevotional";
 
 export default function HomeScreen() {
+  const todaysDevotional = getTodaysDevotional();
 
   return (
     <SafeAreaView style={styles.container}>
       <CustomScrollView>
-      <View style={styles.topContent}>
-        <View style={styles.topTextWrap}>
-          <Text style={{ color: "white" }}>
-            Sing unto the lord with thanksgiving; sing upon the harp unto our
-            God:
-          </Text>
-          <Text>Psalm 147: 7 </Text>
-        </View>
-      </View>
-
-      <View style={styles.mainContent}>
-        <View style={styles.card}>
-          <View>
-            <Text style={styles.cardHeadText}>Monring Devotional</Text>
-            <Text style={styles.cardPtext}>
-              Start your day with this passage
-            </Text>
+        <View style={styles.topContent}>
+          <View style={styles.topTextWrap}>
+            <BibleVerse
+              passage={todaysDevotional.passage}
+              verse={todaysDevotional.verse}
+            />
           </View>
-
-          <TouchableOpacity style={styles.button}>
-            <Text onPress={() => router.push("/(tabs)/devotional")} style={styles.buttonText}>Start Now!</Text>
-          </TouchableOpacity>
         </View>
-      </View>
 
-      <View>
-        
-      </View>
+        <View style={styles.mainContent}>
+          <View style={styles.card}>
+            <View>
+              <Text style={styles.cardHeadText}>Monring Devotional</Text>
+              <Text style={styles.cardPtext}>
+                Start your day with this passage
+              </Text>
+            </View>
+
+            <TouchableOpacity style={styles.button}>
+              <Text
+                onPress={() => router.push("/(tabs)/devotional")}
+                style={styles.buttonText}
+              >
+                Start Now!
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View></View>
       </CustomScrollView>
     </SafeAreaView>
   );
